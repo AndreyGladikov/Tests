@@ -12,6 +12,9 @@ namespace Fibonacchi
         {
             int res = FibonachiHelper.WriteFibonacciSequenceToFile("D:\\fbn.txt", 5);
             Console.WriteLine(res.ToString() + " elements were written to file");
+            bool really = FibonachiHelper.CheckFibonachiSequence("D:\\fbn.txt");
+            if (really) Console.WriteLine("zbs");
+            else Console.WriteLine("ne zbs");
         }
     }
 }

@@ -27,7 +27,23 @@ namespace Fibonacchi
             return 0;
         }
 
-        // bool CheckFibonacciSequence(string path);
+
+         public static bool CheckFibonachiSequence(string path)
+        {
+            if (!File.Exists(path))
+                return false;
+            string text = File.ReadAllText(path);
+            string[] newSequnce = text.Split(' ');
+            int A = newSequnce.Length;
+            List<int> res = SequenceCalculation(A);
+            List<int> comp = new List<int>();
+            foreach (string str in newSequnce)
+            {
+                comp.Add(Int32.Parse(str));
+            }
+            return res.SequenceEqual(comp);
+        }
+
         public static List<int> SequenceCalculation(int length)
         {
             if (length <= 0) return null;
