@@ -7,28 +7,38 @@ using System.Threading.Tasks;
 
 namespace Fibonacchi
 {
-    class FibonachiHelper
+    public class FibonachiHelper
     {
         public static int WriteFibonacciSequenceToFile(string path, int count)
         {
 
-            if (!File.Exists(path))
+            try
             {
-                List<int> res = FibonachiHelper.SequenceCalculation(count);
-                if (res != null)
+                if (!File.Exists(path))
                 {
-                    string s = string.Join(" ", res);
-                    File.WriteAllText(path, s);
+                    List<int> res = FibonachiHelper.SequenceCalculation(count);
+                    if (res != null)
+                    {
+                        string s = string.Join(" ", res);
+                        File.WriteAllText(path, s);
 
-                    return res.Count;
+                        return res.Count;
+                    }
+
                 }
-
+                return 0;
             }
-            return 0;
+            catch (UnauthorizedAccessException)
+            {
+                return -1;
+            }
+            catch (ArgumentException)
+            {
+                return -1;
+            }
         }
 
-
-         public static bool CheckFibonachiSequence(string path)
+        public static bool CheckFibonachiSequence(string path)
         {
             if (!File.Exists(path))
                 return false;
