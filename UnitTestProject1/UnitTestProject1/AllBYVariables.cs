@@ -10,7 +10,6 @@ using OpenQA.Selenium.Chrome;
 //{
 //    public class By
 //    {
-//        private static IWebDriver driver;
 //        driver.FindElement(By.Id("Username"));
 //        driver.FindElement(By.Xpath("//input[@id='Password']"));
 //        driver.FindElement(By.ClassName("submit-button"));
@@ -18,5 +17,6 @@ using OpenQA.Selenium.Chrome;
 //        driver.FindElement(By.Name("Username"));
 //        driver.FindElement(By.LinkText("Use single sign-on"));
 //        driver.FindElement(By.CssSelector("input[id=Username]"));
+//        driver.FindElement(By.partialLinkText("Use single"));
 //    }
 //}
