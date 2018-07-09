@@ -17,14 +17,18 @@ namespace UnitTestProject1
     [TestClass]
     public class Task_20
     {
-        private static string URL = "https://192.168.100.26/";
-        private static string FrameUrl = "https://the-internet.herokuapp.com/iframe";
-        private static string AlertUrl = "https://the-internet.herokuapp.com/javascript_alerts";
+        private const string URL = "https://192.168.100.26/";
+        private const string FrameUrl = "https://the-internet.herokuapp.com/iframe";
+        private const string AlertUrl = "https://the-internet.herokuapp.com/javascript_alerts";
         private static string KeyCode = Convert.ToString('\u0002');
-        private static string AlertMSG = "I am a JS Alert";
+        private const string AlertMSG = "I am a JS Alert";
         private static IWebDriver driver;
-        private string ExpectedURL = "https://192.168.100.26/Home/Index";
-        private string OfficeTabURL = "https://192.168.100.26/Office/Index";
+        private const string ExpectedURL = "https://192.168.100.26/Home/Index";
+        private const string OfficeTabURL = "https://192.168.100.26/Office/Index";
+        private const string JSConfirmCancelMSG = "You clicked: Cancel";
+        private const string JSConfirmOkMSG = "You clicked: OK";
+        private const string JSPromptNullMSG = "You entered: null";
+        private const string JSPromptMessageMSG = "You entered: Test Message";
 
         public void Login(string username, string password)
         {
@@ -138,7 +142,7 @@ namespace UnitTestProject1
             driver.FindElement(By.XPath("//button[@onclick='jsConfirm()']")).Click();
             driver.SwitchTo().Alert().Dismiss();
             string DismissResult = driver.FindElement(By.Id("result")).Text;
-            Assert.AreEqual(DismissResult, "You clicked: Cancel");
+            Assert.AreEqual(DismissResult, JSConfirmCancelMSG);
         }
 
         [TestMethod]
@@ -148,7 +152,7 @@ namespace UnitTestProject1
             driver.FindElement(By.XPath("//button[@onclick='jsConfirm()']")).Click();
             driver.SwitchTo().Alert().Accept();
             string AcceptResult = driver.FindElement(By.Id("result")).Text;
-            Assert.AreEqual(AcceptResult, "You clicked: Ok");
+            Assert.AreEqual(AcceptResult, JSConfirmOkMSG);
         }
 
         [TestMethod]
@@ -160,7 +164,7 @@ namespace UnitTestProject1
             driver.SwitchTo().Alert().SendKeys("Test Message");
             driver.SwitchTo().Alert().Dismiss();
             string DismissResult = driver.FindElement(By.Id("result")).Text;
-            Assert.AreEqual(DismissResult, "You entered: null");
+            Assert.AreEqual(DismissResult, JSPromptNullMSG);
         }
 
         [TestMethod]
@@ -171,7 +175,7 @@ namespace UnitTestProject1
             driver.SwitchTo().Alert().SendKeys("Test Message");
             driver.SwitchTo().Alert().Accept();
             string AcceptResult = driver.FindElement(By.Id("result")).Text;
-            Assert.AreEqual(AcceptResult, "You entered: Test Message");
+            Assert.AreEqual(AcceptResult, JSPromptMessageMSG);
         }
 
         [TestCleanup]
