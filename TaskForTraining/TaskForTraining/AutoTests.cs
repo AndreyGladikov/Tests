@@ -1,16 +1,11 @@
 ﻿using System;
-using System.Text;
-using System.Collections.Generic;
-using System.Linq;
-using System.Data;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Chrome;
-using System.Threading;
 using OpenQA.Selenium.Support.UI;
-using SeleniumExtras.WaitHelpers;
-using System.IO;
+using TaskForTraining.Pages;
+using ExpectedConditions = OpenQA.Selenium.Support.UI.ExpectedConditions;
+using OpenQA.Selenium.Support.PageObjects;
 
 namespace UnitTestProject1
 {
@@ -29,7 +24,7 @@ namespace UnitTestProject1
         private const string JSConfirmOkMSG = "You clicked: OK";
         private const string JSPromptNullMSG = "You entered: null";
         private const string JSPromptMessageMSG = "You entered: Test Message";
-
+      
         public void Login(string username, string password)
         {
             driver.Navigate().GoToUrl(URL);
@@ -42,7 +37,7 @@ namespace UnitTestProject1
         public void initialize()
         {
             driver = new ChromeDriver(@"..\..\..\TaskForTraining\Drivers\"); // почему-то он ищет мой хромдрайвер в папке с деплоями, а его там нету, так что я придумал только такой путь.
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+          //  driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
         }
 
         private TestContext testContextInstance;
@@ -176,6 +171,37 @@ namespace UnitTestProject1
             driver.SwitchTo().Alert().Accept();
             string AcceptResult = driver.FindElement(By.Id("result")).Text;
             Assert.AreEqual(AcceptResult, JSPromptMessageMSG);
+        }
+
+        [TestMethod]
+        [TestCategory("Chrome")]
+        public void MailLogin()
+        {
+            LoginPage login = new LoginPage(driver);
+            login.goToPage();
+            login.clickOnLoginPopUp();
+            login.enterUserName("AutoTest92");
+            login.enterPassword("Inq2020327");
+            login.clickOnLoginButton();
+            HomePage home = new HomePage(driver);
+            string CurText = home.UserName.Text;
+            Assert.IsTrue(CurText.Contains(HomePage.UName), "You did not log in ");
+        }
+
+        [TestMethod]
+        [TestCategory("Chrome")]
+        public void MailLogOut()
+        {
+            LoginPage login = new LoginPage(driver);
+            login.goToPage();
+            login.clickOnLoginPopUp();
+            login.enterUserName("AutoTest92");
+            login.enterPassword("Inq2020327");
+            login.clickOnLoginButton();
+            HomePage home = new HomePage(driver);
+            home.clickOnUserName();
+            home.clickOnLogOutBTN();
+            Assert.IsTrue(login.LoginPopUp.Displayed);
         }
 
         [TestCleanup]
